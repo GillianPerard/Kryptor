@@ -1,0 +1,21 @@
+{
+    "extends": "standard",
+    "overrides": [
+        {
+            "files": [
+                "*"
+            ],
+            "rules": {
+                "indent": [
+                    "error",
+                    4
+                ],
+                "space-before-function-paren": [
+                    "error",
+                    "never"
+                ],
+                "padded-blocks": "off"
+            }
+        }
+    ]
+}
