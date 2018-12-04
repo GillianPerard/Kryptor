@@ -14,7 +14,11 @@
                     "error",
                     "never"
                 ],
-                "padded-blocks": "off"
+                "padded-blocks": "off",
+                "curly": [
+                    "error",
+                    "multi-or-nest"
+                ]
             }
         }
     ]
