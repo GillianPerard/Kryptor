@@ -40,9 +40,9 @@ There you can run the following commands.
 To display the documentation
 
 ```sh
-node kryptor.js -h
+node kryptor -h
 # or
-node kryptor.js --help
+node kryptor --help
 ```
 
 ### Generate key pair
@@ -58,7 +58,7 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto -d ../myFolder
+# Example: node krypto generate -d ../myFolder
 ```
 
 ### Encrypt **with private key**
@@ -76,7 +76,7 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto -p private.pem -f file.txt -d ../myFolder/file.enc
+# Example: node krypto encrypt -p private.pem -f file.txt -d ../myFolder/file.enc
 ```
 
 ### Decrypt **with public key**
@@ -93,7 +93,7 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto -p public.pem -f file.enc
+# Example: node krypto decrypt -p public.pem -f file.enc
 ```
 
 ## Author
