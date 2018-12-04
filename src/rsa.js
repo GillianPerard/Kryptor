@@ -1,46 +1,24 @@
-const { generateKeyPair, privateEncrypt, publicDecrypt } = require('crypto')
-const { writeFile } = require('fs')
+const { generateKeyPairSync, privateEncrypt, publicDecrypt } = require('crypto')
 
 const RSA = 'rsa'
+const FORMAT = 'pem'
 const OPTIONS = {
     modulusLength: 4096,
     publicKeyEncoding: {
         type: 'spki',
-        format: 'pem'
+        format: FORMAT
     },
     privateKeyEncoding: {
         type: 'pkcs8',
-        format: 'pem',
-        cipher: 'aes-256-cbc',
-        passphrase: 'myPassphrase'
+        format: FORMAT
     }
 }
-const PUBLIC_KEY_FILE_NAME = 'public.pem'
-const PRIVATE_KEY_FILE_NAME = 'private.pem'
 
 /**
  * Function to generate a public and private RSA key
- * @param destFolder The destination folder
  */
-const generateKeys = (destFolder) => {
-    generateKeyPair(RSA, OPTIONS, (gErr, publicKey, privateKey) => {
-
-        if (gErr) throw new Error('Keys generation failed.')
-        console.log(publicKey, privateKey)
-
-        const publicKeyPath = `${destFolder}/${PUBLIC_KEY_FILE_NAME}`
-        writeFile(publicKeyPath, publicKey, 'utf-8', (wErr) => {
-            if (wErr) throw new Error('Write public key failed.')
-            console.log('Public key has been saved.')
-        })
-
-        const privateKeyPath = `${destFolder}/${PRIVATE_KEY_FILE_NAME}`
-        writeFile(privateKeyPath, privateKey, 'utf-8', (wErr) => {
-            if (wErr) throw new Error('Write private key failed.')
-            console.log('Private key has been saved.')
-        })
-
-    })
+const generateKeys = () => {
+    return generateKeyPairSync(RSA, OPTIONS)
 }
 
 /**
@@ -49,7 +27,7 @@ const generateKeys = (destFolder) => {
  * @param textToEncrypt The text to encrypt
  */
 const encrypt = (privateKey, textToEncrypt) => {
-    return privateEncrypt(privateKey, textToEncrypt)
+    return privateEncrypt(privateKey, textToEncrypt).toString('hex')
 }
 
 /**
@@ -58,9 +36,7 @@ const encrypt = (privateKey, textToEncrypt) => {
  * @param textToDecrypt The text to decrypt
  */
 const decrypt = (publicKey, textToDecrypt) => {
-    return publicDecrypt(publicKey, textToDecrypt)
+    return publicDecrypt(publicKey, textToDecrypt).toString('utf-8')
 }
 
-module.exports.generateKeys = generateKeys
-module.exports.encrypt = encrypt
-module.exports.decrypt = decrypt
+module.exports = { generateKeys, encrypt, decrypt }
