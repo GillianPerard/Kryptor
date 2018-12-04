@@ -50,15 +50,15 @@ node kryptor.js --help
 To generate private and public keys into the desired folder (**private.pem** and **public.pem**)
 
 ```sh
-    Command:
-      generate | g
+Command:
+    generate | g
 
-    Options:
-      -d, --destFolder <dest>       [Required] Destination folder
-      -h, --help                     Output usage information
+Options:
+    -d, --destFolder <dest>       [Required] Destination folder
+    -h, --help                     Output usage information
 
 
-    # Example: node krypto -d ../myFolder
+# Example: node krypto -d ../myFolder
 ```
 
 ### Encrypt **with private key**
@@ -66,17 +66,17 @@ To generate private and public keys into the desired folder (**private.pem** and
 To encrypt a text with the private key.
 
 ```sh
-    Command:
-      encrypt | e
+Command:
+    encrypt | e
 
-    Options:
-      -p, --privateKey <path>       [Required] Path of the private key
-      -f, --fileToEncrypt <path>    [Required] Path of the file to encrypt
-      -d, --destination <path>      [Required] Path of the encrypted file
-      -h, --help                     Output usage information
+Options:
+    -p, --privateKey <path>       [Required] Path of the private key
+    -f, --fileToEncrypt <path>    [Required] Path of the file to encrypt
+    -d, --destination <path>      [Required] Path of the encrypted file
+    -h, --help                     Output usage information
 
 
-    # Example: node krypto -p private.pem -f file.txt -d ../myFolder/file.enc
+# Example: node krypto -p private.pem -f file.txt -d ../myFolder/file.enc
 ```
 
 ### Decrypt **with public key**
@@ -84,16 +84,16 @@ To encrypt a text with the private key.
 To decrypt an encrypted text with the public key which matches with the private.
 
 ```sh
-    Command:
-      decrypt | d
+Command:
+    decrypt | d
 
-    Options:
-      -p, --publicKey <path>        [Required] Path of the public key
-      -f, --fileToDecrypt <path>    [Required] Path of the file to decrypt
-      -h, --help                     Output usage information
+Options:
+    -p, --publicKey <path>        [Required] Path of the public key
+    -f, --fileToDecrypt <path>    [Required] Path of the file to decrypt
+    -h, --help                     Output usage information
 
 
-    # Example: node krypto -p public.pem -f file.enc
+# Example: node krypto -p public.pem -f file.enc
 ```
 
 ## Author
