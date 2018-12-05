@@ -1,4 +1,4 @@
-const { generateKeyPairSync, privateEncrypt, publicDecrypt } = require('crypto')
+const crypto = require('crypto')
 
 const RSA = 'rsa'
 const FORMAT = 'pem'
@@ -18,7 +18,7 @@ const OPTIONS = {
  * Function to generate a public and private RSA key
  */
 const generateKeys = () => {
-    return generateKeyPairSync(RSA, OPTIONS)
+    return crypto.generateKeyPairSync(RSA, OPTIONS)
 }
 
 /**
@@ -26,8 +26,8 @@ const generateKeys = () => {
  * @param privateKey The specified private key
  * @param textToEncrypt The text to encrypt
  */
-const encrypt = (privateKey, textToEncrypt) => {
-    return privateEncrypt(privateKey, textToEncrypt).toString('hex')
+const privateEncrypt = (privateKey, textToEncrypt) => {
+    return crypto.privateEncrypt(privateKey, textToEncrypt).toString('hex')
 }
 
 /**
@@ -35,8 +35,26 @@ const encrypt = (privateKey, textToEncrypt) => {
  * @param publicKey The specified public key
  * @param textToDecrypt The text to decrypt
  */
-const decrypt = (publicKey, textToDecrypt) => {
-    return publicDecrypt(publicKey, textToDecrypt).toString('utf-8')
+const publicDecrypt = (publicKey, textToDecrypt) => {
+    return crypto.publicDecrypt(publicKey, textToDecrypt).toString('utf-8')
 }
 
-module.exports = { generateKeys, encrypt, decrypt }
+/**
+ * Function to encrypt a text with the public key
+ * @param publicKey The specified public key
+ * @param textToEncrypt The text to encrypt
+ */
+const publicEncrypt = (publicKey, textToEncrypt) => {
+    return crypto.publicEncrypt(publicKey, textToEncrypt).toString('hex')
+}
+
+/**
+ * Function to decrypt a text with the private key
+ * @param privateKey The specified private key
+ * @param textToDecrypt The text to decrypt
+ */
+const privateDecrypt = (privateKey, textToDecrypt) => {
+    return crypto.privateDecrypt(privateKey, textToDecrypt).toString('utf-8')
+}
+
+module.exports = { generateKeys, privateEncrypt, publicDecrypt, publicEncrypt, privateDecrypt }
