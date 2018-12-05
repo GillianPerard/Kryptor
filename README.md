@@ -47,18 +47,18 @@ node kryptor --help
 
 ### Generate key pair
 
-To generate private and public keys into the desired folder (**private.pem** and **public.pem**)
+To generate private and public keys into the desired folder with the desired key size (**private.pem** and **public.pem**).
 
 ```sh
 Command:
-    generate | g
+    generate | g [keySize]        [Optional] Key size in bits (default: 4096)
 
 Options:
     -d, --destFolder <dest>       [Required] Destination folder
     -h, --help                     Output usage information
 
 
-# Example: node krypto generate -d ../myFolder
+# Example: node krypto generate 2048 -d ../myFolder
 ```
 
 ### Encrypt **with a public key**

@@ -16,8 +16,11 @@ const OPTIONS = {
 
 /**
  * Function to generate a public and private RSA key
+ * @param modulusLength The key size in bits
  */
-const generateKeys = () => {
+const generateKeys = (modulusLength) => {
+    if (modulusLength)
+        OPTIONS.modulusLength = +modulusLength
     return crypto.generateKeyPairSync(RSA, OPTIONS)
 }
 

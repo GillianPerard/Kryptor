@@ -6,8 +6,9 @@ const PUBLIC_KEY_FILE_NAME = 'public.pem'
 const PRIVATE_KEY_FILE_NAME = 'private.pem'
 
 // Generate keys command
-const generateKeysCmd = destFolder => {
-    const { publicKey, privateKey } = generateKeys()
+const generateKeysCmd = (keySize, destFolder) => {
+    keySize = !isNaN(keySize) ? keySize : undefined
+    const { publicKey, privateKey } = generateKeys(keySize)
 
     destFolder = destFolder !== undefined ? destFolder : process.cwd()
     const publicKeyPath = join(destFolder, PUBLIC_KEY_FILE_NAME)
