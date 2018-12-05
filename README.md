@@ -1,10 +1,10 @@
 # Kryptor
 
-A CLI to generate RSA key (private and public), encrypt with the private key and decrypt with the public (for the moment).
+A CLI to generate RSA key (private and public), public encrypt, private decrypt, private encrypt & public decrypt (for the moment).
 
 ## Getting Started
 
-These instructions will help you to get this project on your own machine and run the 3 available commands.
+These instructions will help you to get this project on your own machine and run the 5 available commands.
 
 ### Prerequisites
 
@@ -61,13 +61,48 @@ Options:
 # Example: node krypto generate -d ../myFolder
 ```
 
-### Encrypt **with private key**
+### Encrypt **with a public key**
 
-To encrypt a text with the private key.
+To encrypt a text with a public key.
 
 ```sh
 Command:
-    encrypt | e
+    public-encrypt | pcet
+
+Options:
+    -p, --publicKey <path>        [Required] Path of the public key
+    -f, --fileToEncrypt <path>    [Required] Path of the file to encrypt
+    -d, --destination <path>      [Required] Path of the encrypted file
+    -h, --help                     Output usage information
+
+
+# Example: node krypto public-encrypt -p public.pem -f file.txt -d ../myFolder/file.enc
+```
+
+### Decrypt **with a private key**
+
+To decrypt an encrypted text with a private key which matches with a public key.
+
+```sh
+Command:
+    private-decrypt | pedt
+
+Options:
+    -p, --privateKey <path>       [Required] Path of the private key
+    -f, --fileToDecrypt <path>    [Required] Path of the file to decrypt
+    -h, --help                     Output usage information
+
+
+# Example: node krypto private-decrypt -p private.pem -f file.enc
+```
+
+### Encrypt **with a private key**
+
+To encrypt a text with a private key.
+
+```sh
+Command:
+    private-encrypt | peet
 
 Options:
     -p, --privateKey <path>       [Required] Path of the private key
@@ -76,16 +111,16 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto encrypt -p private.pem -f file.txt -d ../myFolder/file.enc
+# Example: node krypto private-encrypt -p private.pem -f file.txt -d ../myFolder/file.enc
 ```
 
-### Decrypt **with public key**
+### Decrypt **with a public key**
 
-To decrypt an encrypted text with the public key which matches with the private.
+To decrypt an encrypted text with a public key which matches with the private key.
 
 ```sh
 Command:
-    decrypt | d
+    public-decrypt | pcdt
 
 Options:
     -p, --publicKey <path>        [Required] Path of the public key
@@ -93,7 +128,7 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto decrypt -p public.pem -f file.enc
+# Example: node krypto public-decrypt -p public.pem -f file.enc
 ```
 
 ## Author
