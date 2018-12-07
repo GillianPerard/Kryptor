@@ -7,18 +7,24 @@ const PRIVATE_KEY_FILE_NAME = 'private.pem'
 
 // Generate keys command
 const generateKeysCmd = (keySize, destFolder) => {
-    keySize = !isNaN(keySize) ? keySize : undefined
+    if (isNaN(keySize))
+        throw new Error('Key size must be an integer.')
+
     const { publicKey, privateKey } = generateKeys(keySize)
 
-    destFolder = destFolder !== undefined ? destFolder : process.cwd()
-    const publicKeyPath = join(destFolder, PUBLIC_KEY_FILE_NAME)
-    const privateKeyPath = join(destFolder, PRIVATE_KEY_FILE_NAME)
+    if (!destFolder) {
+        console.log(publicKey)
+        console.log(privateKey)
+    } else {
+        const publicKeyPath = join(destFolder, PUBLIC_KEY_FILE_NAME)
+        const privateKeyPath = join(destFolder, PRIVATE_KEY_FILE_NAME)
 
-    writeFileSync(publicKeyPath, publicKey)
-    console.log('Public key has been saved.')
+        writeFileSync(publicKeyPath, publicKey)
+        console.log('Public key has been saved.')
 
-    writeFileSync(privateKeyPath, privateKey)
-    console.log('Private key has been saved.')
+        writeFileSync(privateKeyPath, privateKey)
+        console.log('Private key has been saved.')
+    }
 }
 
 // Encrypt command
@@ -33,20 +39,34 @@ const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey = true) =>
     const textToEncrypt = readFileSync(fileToEncrypt)
 
     const encrypted = usePublicKey ? publicEncrypt(key, textToEncrypt) : privateEncrypt(key, textToEncrypt)
-    writeFileSync(destination, encrypted)
-    console.log('Encrypted file has been saved.')
+
+    if (!destination) {
+        console.log(encrypted)
+    } else {
+        writeFileSync(destination, encrypted)
+        console.log('Encrypted file has been saved.')
+    }
 }
 
 // Decrypt command
-const decryptCmd = (keyPath, fileToDecrypt, usePrivateKey = true) => {
+const decryptCmd = (keyPath, fileToDecrypt, destination, usePrivateKey = true) => {
     if (!keyPath)
         throw new Error('Path of the key is required.')
+
+    if (!fileToDecrypt)
+        throw new Error('Path of file to decrypt is required.')
 
     const key = readFileSync(keyPath, 'utf-8')
     const textToDecrypt = readFileSync(fileToDecrypt, 'utf-8')
     const bufferToDecrypt = Buffer.from(textToDecrypt, 'base64')
     const decrypted = usePrivateKey ? privateDecrypt(key, bufferToDecrypt) : publicDecrypt(key, bufferToDecrypt)
-    console.log(decrypted)
+
+    if (!destination) {
+        console.log(decrypted)
+    } else {
+        writeFileSync(destination, decrypted)
+        console.log('Decrypted file has been saved.')
+    }
 }
 
 module.exports = { generateKeysCmd, encryptCmd, decryptCmd }
