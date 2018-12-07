@@ -7,18 +7,24 @@ const PRIVATE_KEY_FILE_NAME = 'private.pem'
 
 // Generate keys command
 const generateKeysCmd = (keySize, destFolder) => {
-    keySize = !isNaN(keySize) ? keySize : undefined
+    if (isNaN(keySize))
+        throw new Error('Key size must be an integer.')
+
     const { publicKey, privateKey } = generateKeys(keySize)
 
-    destFolder = destFolder !== undefined ? destFolder : process.cwd()
-    const publicKeyPath = join(destFolder, PUBLIC_KEY_FILE_NAME)
-    const privateKeyPath = join(destFolder, PRIVATE_KEY_FILE_NAME)
+    if (!destFolder) {
+        console.log(publicKey)
+        console.log(privateKey)
+    } else {
+        const publicKeyPath = join(destFolder, PUBLIC_KEY_FILE_NAME)
+        const privateKeyPath = join(destFolder, PRIVATE_KEY_FILE_NAME)
 
-    writeFileSync(publicKeyPath, publicKey)
-    console.log('Public key has been saved.')
+        writeFileSync(publicKeyPath, publicKey)
+        console.log('Public key has been saved.')
 
-    writeFileSync(privateKeyPath, privateKey)
-    console.log('Private key has been saved.')
+        writeFileSync(privateKeyPath, privateKey)
+        console.log('Private key has been saved.')
+    }
 }
 
 // Encrypt command

@@ -9,10 +9,10 @@ program
 
 // Add generate command to the program
 program
-    .command('generate [keySize]')
+    .command('generate <keySize>')
     .alias('g')
-    .option('-d, --destFolder <dest>', '[Required] Destination folder.')
-    .action((keySize, cmd) => generateKeysCmd(keySize, cmd.destFolder))
+    .option('-e, --export <destFolder>', '[Required] Destination folder.')
+    .action((keySize, cmd) => generateKeysCmd(keySize, cmd.export))
 
 // Add public encrypt command to the program
 program
