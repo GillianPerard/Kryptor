@@ -49,15 +49,24 @@ const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey = true) =>
 }
 
 // Decrypt command
-const decryptCmd = (keyPath, fileToDecrypt, usePrivateKey = true) => {
+const decryptCmd = (keyPath, fileToDecrypt, destination, usePrivateKey = true) => {
     if (!keyPath)
         throw new Error('Path of the key is required.')
+
+    if (!fileToDecrypt)
+        throw new Error('Path of file to decrypt is required.')
 
     const key = readFileSync(keyPath, 'utf-8')
     const textToDecrypt = readFileSync(fileToDecrypt, 'utf-8')
     const bufferToDecrypt = Buffer.from(textToDecrypt, 'base64')
     const decrypted = usePrivateKey ? privateDecrypt(key, bufferToDecrypt) : publicDecrypt(key, bufferToDecrypt)
-    console.log(decrypted)
+
+    if (!destination) {
+        console.log(decrypted)
+    } else {
+        writeFileSync(destination, decrypted)
+        console.log('Decrypted file has been saved.')
+    }
 }
 
 module.exports = { generateKeysCmd, encryptCmd, decryptCmd }

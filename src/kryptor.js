@@ -29,7 +29,8 @@ program
     .alias('pedt')
     .option('-p, --privateKey <path>', '[Required] Path of the private key.')
     .option('-f, --fileToDecrypt <path>', '[Required] Path of the encrypted file.')
-    .action(cmd => decryptCmd(cmd.privateKey, cmd.fileToDecrypt))
+    .option('-e, --export <path>', '[Required] Path of the decrypted file.')
+    .action(cmd => decryptCmd(cmd.privateKey, cmd.fileToDecrypt, cmd.export))
 
 // Add private encrypt command to the program
 program
@@ -46,6 +47,7 @@ program
     .alias('pcdt')
     .option('-p, --publicKey <path>', '[Required] Path of the public key.')
     .option('-f, --fileToDecrypt <path>', '[Required] Path of the encrypted file.')
-    .action(cmd => decryptCmd(cmd.publicKey, cmd.fileToDecrypt, false))
+    .option('-e, --export <path>', '[Required] Path of the decrypted file.')
+    .action(cmd => decryptCmd(cmd.publicKey, cmd.fileToDecrypt, cmd.export, false))
 
 program.parse(process.argv)
