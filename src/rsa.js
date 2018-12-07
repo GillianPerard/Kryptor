@@ -30,7 +30,7 @@ const generateKeys = (modulusLength) => {
  * @param textToEncrypt The text to encrypt
  */
 const privateEncrypt = (privateKey, textToEncrypt) => {
-    return crypto.privateEncrypt(privateKey, textToEncrypt).toString('hex')
+    return crypto.privateEncrypt(privateKey, textToEncrypt).toString('base64')
 }
 
 /**
@@ -48,7 +48,7 @@ const publicDecrypt = (publicKey, textToDecrypt) => {
  * @param textToEncrypt The text to encrypt
  */
 const publicEncrypt = (publicKey, textToEncrypt) => {
-    return crypto.publicEncrypt(publicKey, textToEncrypt).toString('hex')
+    return crypto.publicEncrypt(publicKey, textToEncrypt).toString('base64')
 }
 
 /**
