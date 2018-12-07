@@ -44,7 +44,7 @@ const decryptCmd = (keyPath, fileToDecrypt, usePrivateKey = true) => {
 
     const key = readFileSync(keyPath, 'utf-8')
     const textToDecrypt = readFileSync(fileToDecrypt, 'utf-8')
-    const bufferToDecrypt = Buffer.from(textToDecrypt, 'hex')
+    const bufferToDecrypt = Buffer.from(textToDecrypt, 'base64')
     const decrypted = usePrivateKey ? privateDecrypt(key, bufferToDecrypt) : publicDecrypt(key, bufferToDecrypt)
     console.log(decrypted)
 }
