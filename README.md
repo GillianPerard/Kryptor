@@ -51,11 +51,11 @@ To generate private and public keys into the desired folder with the desired key
 
 ```sh
 Command:
-    generate | g [keySize]        [Optional] Key size in bits (default: 4096)
+    generate | g <keySize>          [Required] Key size in bits
 
 Options:
-    -d, --destFolder <dest>       [Required] Destination folder
-    -h, --help                     Output usage information
+    -e, --export <destFolder>       [Required] Destination folder
+    -h, --help                       Output usage information
 
 
 # Example: node krypto generate 2048 -d ../myFolder
@@ -63,17 +63,17 @@ Options:
 
 ### Encrypt **with a public key**
 
-To encrypt a text with a public key.
+To encrypt a text with a public key (encoding: base64).
 
 ```sh
 Command:
     public-encrypt | pcet
 
 Options:
-    -p, --publicKey <path>        [Required] Path of the public key
-    -f, --fileToEncrypt <path>    [Required] Path of the file to encrypt
-    -d, --destination <path>      [Required] Path of the encrypted file
-    -h, --help                     Output usage information
+    -p, --publicKey <path>          [Required] Path of the public key
+    -f, --fileToEncrypt <path>      [Required] Path of the file to encrypt
+    -e, --export <path>             [Required] Path of the encrypted file
+    -h, --help                       Output usage information
 
 
 # Example: node krypto public-encrypt -p public.pem -f file.txt -d ../myFolder/file.enc
@@ -81,7 +81,7 @@ Options:
 
 ### Decrypt **with a private key**
 
-To decrypt an encrypted text with a private key which matches with a public key.
+To decrypt an encrypted text with a private key which matches with a public key (from encoding: base64).
 
 ```sh
 Command:
@@ -90,6 +90,7 @@ Command:
 Options:
     -p, --privateKey <path>       [Required] Path of the private key
     -f, --fileToDecrypt <path>    [Required] Path of the file to decrypt
+    -e, --export <path>           [Required] Path of the decrypted file
     -h, --help                     Output usage information
 
 
@@ -98,7 +99,7 @@ Options:
 
 ### Encrypt **with a private key**
 
-To encrypt a text with a private key.
+To encrypt a text with a private key (encoding: base64).
 
 ```sh
 Command:
@@ -107,7 +108,7 @@ Command:
 Options:
     -p, --privateKey <path>       [Required] Path of the private key
     -f, --fileToEncrypt <path>    [Required] Path of the file to encrypt
-    -d, --destination <path>      [Required] Path of the encrypted file
+    -e, --export <path>           [Required] Path of the encrypted file
     -h, --help                     Output usage information
 
 
@@ -125,6 +126,7 @@ Command:
 Options:
     -p, --publicKey <path>        [Required] Path of the public key
     -f, --fileToDecrypt <path>    [Required] Path of the file to decrypt
+    -e, --export <path>           [Required] Path of the decrypted file
     -h, --help                     Output usage information
 
 
