@@ -58,12 +58,12 @@ Options:
     -h, --help                       Output usage information
 
 
-# Example: node krypto generate 2048 -d ../myFolder
+# Example: node krypto generate 2048 -e .
 ```
 
 ### Encrypt **with a public key**
 
-To encrypt a text with a public key (encoding: base64).
+To encrypt a text with a public key (*encoding: base64*).
 
 ```sh
 Command:
@@ -76,12 +76,12 @@ Options:
     -h, --help                       Output usage information
 
 
-# Example: node krypto public-encrypt -p public.pem -f file.txt -d ../myFolder/file.enc
+# Example: node krypto public-encrypt -p public.pem -f file.txt -e file.enc
 ```
 
 ### Decrypt **with a private key**
 
-To decrypt an encrypted text with a private key which matches with a public key (from encoding: base64).
+To decrypt an encrypted text with a private key which matches with a public key (*from encoding: base64*).
 
 ```sh
 Command:
@@ -94,12 +94,12 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto private-decrypt -p private.pem -f file.enc
+# Example: node krypto private-decrypt -p private.pem -f file.enc -e file.txt
 ```
 
 ### Encrypt **with a private key**
 
-To encrypt a text with a private key (encoding: base64).
+To encrypt a text with a private key (*encoding: base64*).
 
 ```sh
 Command:
@@ -112,12 +112,12 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto private-encrypt -p private.pem -f file.txt -d ../myFolder/file.enc
+# Example: node krypto private-encrypt -p private.pem -f file.txt -e file.enc
 ```
 
 ### Decrypt **with a public key**
 
-To decrypt an encrypted text with a public key which matches with the private key.
+To decrypt an encrypted text with a public key which matches with the private key (*from encoding: base64*).
 
 ```sh
 Command:
@@ -130,7 +130,7 @@ Options:
     -h, --help                     Output usage information
 
 
-# Example: node krypto public-decrypt -p public.pem -f file.enc
+# Example: node krypto public-decrypt -p public.pem -f file.enc -e file.txt
 ```
 
 ## Author
