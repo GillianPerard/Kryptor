@@ -39,8 +39,13 @@ const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey = true) =>
     const textToEncrypt = readFileSync(fileToEncrypt)
 
     const encrypted = usePublicKey ? publicEncrypt(key, textToEncrypt) : privateEncrypt(key, textToEncrypt)
-    writeFileSync(destination, encrypted)
-    console.log('Encrypted file has been saved.')
+
+    if (!destination) {
+        console.log(encrypted)
+    } else {
+        writeFileSync(destination, encrypted)
+        console.log('Encrypted file has been saved.')
+    }
 }
 
 // Decrypt command
