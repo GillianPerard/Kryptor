@@ -28,7 +28,7 @@ const generateKeysCmd = (keySize, destFolder) => {
 }
 
 // Encrypt command
-const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey = true) => {
+const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey) => {
     if (!keyPath)
         throw new Error('Path of the key is required.')
 
@@ -49,7 +49,7 @@ const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey = true) =>
 }
 
 // Decrypt command
-const decryptCmd = (keyPath, fileToDecrypt, destination, usePrivateKey = true) => {
+const decryptCmd = (keyPath, fileToDecrypt, destination, usePublicKey) => {
     if (!keyPath)
         throw new Error('Path of the key is required.')
 
@@ -59,7 +59,7 @@ const decryptCmd = (keyPath, fileToDecrypt, destination, usePrivateKey = true) =
     const key = readFileSync(keyPath, 'utf-8')
     const textToDecrypt = readFileSync(fileToDecrypt, 'utf-8')
     const bufferToDecrypt = Buffer.from(textToDecrypt, 'base64')
-    const decrypted = usePrivateKey ? privateDecrypt(key, bufferToDecrypt) : publicDecrypt(key, bufferToDecrypt)
+    const decrypted = usePublicKey ? publicDecrypt(key, bufferToDecrypt) : privateDecrypt(key, bufferToDecrypt)
 
     if (!destination) {
         console.log(decrypted)
