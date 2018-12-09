@@ -14,13 +14,13 @@ Check the NodeJs documentation to know how to install it: [https://nodejs.org](h
 
 ### Installing
 
-To get the project run the following commands
+To get the project run the following commands:
 
 ```sh
 git clone https://github.com/GillianPerard/kryptor.git
 ```
 
-Then run the npm command to install all dependencies
+Then run the npm command to install all dependencies:
 
 ```sh
 npm ci
@@ -28,8 +28,7 @@ npm ci
 
 Now normally, everything should be ready to use.
 
-
-## Usage
+## Usage (CLI)
 
 Go to the project folder then go to src folder.
 
@@ -37,7 +36,7 @@ There you can run the following commands.
 
 ### Help
 
-To display the documentation
+To display the documentation:
 
 ```sh
 node kryptor -h
@@ -47,7 +46,7 @@ node kryptor --help
 
 ### Generate key pair
 
-To generate private and public keys into the desired folder with the desired key size (**private.pem** and **public.pem**).
+To generate private and public keys into the desired folder with the desired key size (**private.pem** and **public.pem**):
 
 ```sh
 Command:
@@ -63,7 +62,7 @@ Options:
 
 ### Encrypt **with a public key**
 
-To encrypt a text with a public key (*encoding: base64*).
+To encrypt a text with a public key (*encoding: base64*):
 
 ```sh
 Command:
@@ -81,7 +80,7 @@ Options:
 
 ### Decrypt **with a private key**
 
-To decrypt an encrypted text with a private key which matches with a public key (*from encoding: base64*).
+To decrypt an encrypted text with a private key which matches with a public key (*from encoding: base64*):
 
 ```sh
 Command:
@@ -99,7 +98,7 @@ Options:
 
 ### Encrypt **with a private key**
 
-To encrypt a text with a private key (*encoding: base64*).
+To encrypt a text with a private key (*encoding: base64*):
 
 ```sh
 Command:
@@ -117,7 +116,7 @@ Options:
 
 ### Decrypt **with a public key**
 
-To decrypt an encrypted text with a public key which matches with the private key (*from encoding: base64*).
+To decrypt an encrypted text with a public key which matches with the private key (*from encoding: base64*):
 
 ```sh
 Command:
@@ -132,6 +131,23 @@ Options:
 
 # Example: node krypto public-decrypt -p public.pem -f file.enc -e file.txt
 ```
+
+## Usage (program)
+
+Instead of use the CLI if you don't know how to or just because you think it's boring to remember you all options; you can use Kryptor thanks to the **easy-kryptor.js** file.
+
+Go to the project folder then go to src folder.
+
+Run the following command to start the program and follow the instructions:
+
+```sh
+node easy-kryptor
+```
+
+Example:
+
+<img src="./assets/easy-kryptor.png" width="400">
+
 
 ## Author
 
