@@ -21,7 +21,7 @@ program
     .option('-p, --publicKey <path>', '[Required] Path of the public key.')
     .option('-f, --fileToEncrypt <path>', '[Required] Path of the file to encrypt.')
     .option('-e, --export <path>', '[Required] Path of the encrypted file.')
-    .action(cmd => encryptCmd(cmd.publicKey, cmd.fileToEncrypt, cmd.export))
+    .action(cmd => encryptCmd(cmd.publicKey, cmd.fileToEncrypt, cmd.export, true))
 
 // Add private decrypt command to the program
 program
@@ -30,7 +30,7 @@ program
     .option('-p, --privateKey <path>', '[Required] Path of the private key.')
     .option('-f, --fileToDecrypt <path>', '[Required] Path of the encrypted file.')
     .option('-e, --export <path>', '[Required] Path of the decrypted file.')
-    .action(cmd => decryptCmd(cmd.privateKey, cmd.fileToDecrypt, cmd.export))
+    .action(cmd => decryptCmd(cmd.privateKey, cmd.fileToDecrypt, cmd.export, false))
 
 // Add private encrypt command to the program
 program
@@ -48,6 +48,6 @@ program
     .option('-p, --publicKey <path>', '[Required] Path of the public key.')
     .option('-f, --fileToDecrypt <path>', '[Required] Path of the encrypted file.')
     .option('-e, --export <path>', '[Required] Path of the decrypted file.')
-    .action(cmd => decryptCmd(cmd.publicKey, cmd.fileToDecrypt, cmd.export, false))
+    .action(cmd => decryptCmd(cmd.publicKey, cmd.fileToDecrypt, cmd.export, true))
 
 program.parse(process.argv)
