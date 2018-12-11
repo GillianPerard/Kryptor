@@ -19,8 +19,9 @@ const OPTIONS = {
  * @param modulusLength The key size in bits
  */
 const generateKeys = (modulusLength) => {
-    if (modulusLength)
+    if (modulusLength) {
         OPTIONS.modulusLength = +modulusLength
+    }
     return crypto.generateKeyPairSync(RSA, OPTIONS)
 }
 

@@ -1,6 +1,7 @@
 const { execSync } = require('child_process')
 const { existsSync } = require('fs')
 const { expect } = require('chai')
+const { after, describe, it } = require('mocha')
 const del = require('del')
 
 const licenseExamplePath = './examples/license.json'
@@ -11,14 +12,14 @@ const privateEncryptedLicensePath = './test/private-license.enc'
 const publicDecryptedLicensePath = './test/public-license.json'
 const privateDecryptedLicensePath = './test/private-license.json'
 
-describe("Test kryptor.js", () => {
-    it("Generate keys", () => {
+describe('Test kryptor.js', () => {
+    it('Generate keys', () => {
         execSync('node ./src/kryptor.js g 1024 -e ./test')
         const publicKeyExists = existsSync(publicKeyPath)
         const privateKeyExists = existsSync(privateKeyPath)
         expect(publicKeyExists).to.be.true
         expect(privateKeyExists).to.be.true
-    });
+    })
 
     it('Public encrypt', () => {
         execSync(`node ./src/kryptor.js pcet -p ${publicKeyPath} -f ${licenseExamplePath} -e ${publicEncryptedLicensePath}`)
@@ -43,6 +44,6 @@ describe("Test kryptor.js", () => {
         const decryptedFileExists = existsSync(privateDecryptedLicensePath)
         expect(decryptedFileExists).to.be.true
     })
-});
+})
 
 after(() => del.sync(['./test/*.pem', './test/*.enc', './test/*.json']))

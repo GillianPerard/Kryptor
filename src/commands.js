@@ -7,8 +7,7 @@ const PRIVATE_KEY_FILE_NAME = 'private.pem'
 
 // Generate keys command
 const generateKeysCmd = (keySize, destFolder) => {
-    if (isNaN(keySize))
-        throw new Error('Key size must be an integer.')
+    if (isNaN(keySize)) { throw new Error('Key size must be an integer.') }
 
     const { publicKey, privateKey } = generateKeys(keySize)
 
@@ -29,11 +28,13 @@ const generateKeysCmd = (keySize, destFolder) => {
 
 // Encrypt command
 const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey) => {
-    if (!keyPath)
+    if (!keyPath) {
         throw new Error('Path of the key is required.')
+    }
 
-    if (!fileToEncrypt)
+    if (!fileToEncrypt) {
         throw new Error('Path of file to encrypt is required.')
+    }
 
     const key = readFileSync(keyPath, 'utf-8')
     const textToEncrypt = readFileSync(fileToEncrypt)
@@ -50,11 +51,13 @@ const encryptCmd = (keyPath, fileToEncrypt, destination, usePublicKey) => {
 
 // Decrypt command
 const decryptCmd = (keyPath, fileToDecrypt, destination, usePublicKey) => {
-    if (!keyPath)
+    if (!keyPath) {
         throw new Error('Path of the key is required.')
+    }
 
-    if (!fileToDecrypt)
+    if (!fileToDecrypt) {
         throw new Error('Path of file to decrypt is required.')
+    }
 
     const key = readFileSync(keyPath, 'utf-8')
     const textToDecrypt = readFileSync(fileToDecrypt, 'utf-8')

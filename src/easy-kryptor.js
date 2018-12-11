@@ -1,4 +1,4 @@
-const inquirer = require('inquirer');
+const inquirer = require('inquirer')
 const { lstatSync } = require('fs')
 const { generateKeysCmd, encryptCmd, decryptCmd } = require('./commands.js')
 
@@ -21,7 +21,7 @@ const PRIVATE_ENCRYPT = `${CommandType.Private} ${Command.Encrypt}`
 const PUBLIC_DECRYPT = `${CommandType.Public} ${Command.Decrypt}`
 const PRIVATE_DECRYPT = `${CommandType.Private} ${Command.Decrypt}`
 
-let workflow;
+let workflow
 
 // Function to run the program
 const main = () => {
@@ -43,13 +43,12 @@ const chooseCommand = () => {
             if (answer.command === Command.GenerateKeys) {
                 workflow.command = answer.command
                 chooseKeySize()
-            }
-            else {
+            } else {
                 workflow.command = getCommand(answer.command)
                 workflow.commandType = getCommandType(answer.command)
                 askKeyPath()
             }
-        });
+        })
 }
 
 // Function so that the user can choose the key size of generates keys
@@ -76,9 +75,9 @@ const askKeyPath = () => {
             message: 'What\'s the path to the key file?',
             validate: value => {
                 var pass = lstatSync(value).isFile()
-                if (pass)
+                if (pass) {
                     return true
-
+                }
                 return 'Please write a path to an existing file.'
             }
         })
@@ -97,9 +96,9 @@ const askFilePath = () => {
             message: `What's the path to the file to ${workflow.command} ?`,
             validate: value => {
                 var pass = lstatSync(value).isFile()
-                if (pass)
+                if (pass) {
                     return true
-
+                }
                 return 'Please write a path to an existing file.'
             }
         })
@@ -117,12 +116,7 @@ const wannaExport = () => {
         message: 'Do you want to export?',
         default: false
     }).then(answer => {
-        if (answer.export && workflow.command === Command.GenerateKeys)
-            askDestinationFolder()
-        else if (answer.export && workflow.command !== Command.GenerateKeys)
-            askDestinationFile()
-        else
-            runCommand()
+        if (answer.export && workflow.command === Command.GenerateKeys) { askDestinationFolder() } else if (answer.export && workflow.command !== Command.GenerateKeys) { askDestinationFile() } else { runCommand() }
     })
 }
 
@@ -135,9 +129,9 @@ const askDestinationFolder = () => {
             message: 'What\'s the path to the destination folder?',
             validate: value => {
                 var pass = lstatSync(value).isDirectory()
-                if (pass)
+                if (pass) {
                     return true
-
+                }
                 return 'Please write a path to an existing folder.'
             }
         })
@@ -169,24 +163,25 @@ const wannaContinue = () => {
         message: 'Have you finished?',
         default: true
     }).then(answer => {
-        if (answer.continue)
-            console.log("See you soon !")
-        else
+        if (answer.continue) {
+            console.log('See you soon !')
+        } else {
             chooseCommand()
+        }
     })
 }
 
 // Function to run the appropriate command according to the workflow
 const runCommand = () => {
     const { command, commandType, keySize, keyPath, filePath, destinationFolder, destinationFile } = workflow
-    const usePublicKey = commandType === CommandType.Public ? true : false
-    if (command === GENERATE_KEYS)
+    const usePublicKey = commandType === CommandType.Public
+    if (command === GENERATE_KEYS) {
         generateKeysCmd(keySize, destinationFolder)
-    else if (command === Command.Encrypt)
+    } else if (command === Command.Encrypt) {
         encryptCmd(keyPath, filePath, destinationFile, usePublicKey)
-    else if (command === Command.Decrypt)
+    } else if (command === Command.Decrypt) {
         decryptCmd(keyPath, filePath, destinationFile, usePublicKey)
-
+    }
     wannaContinue()
 }
 
