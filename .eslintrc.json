@@ -15,10 +15,7 @@
                     "never"
                 ],
                 "padded-blocks": "off",
-                "curly": [
-                    "error",
-                    "consistent"
-                ]
+                "no-unused-expressions": "off"
             }
         }
     ]
