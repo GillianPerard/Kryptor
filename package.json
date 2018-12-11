@@ -7,8 +7,9 @@
         "kryptor": "src/kryptor.js"
     },
     "scripts": {
-        "test": "./node_modules/.bin/mocha --reporter spec",
-        "start": "node src/easy-kryptor.js"
+        "start": "node src/easy-kryptor.js",
+        "lint": "./node_modules/.bin/eslint . --color",
+        "test": "./node_modules/.bin/mocha --reporter spec"
     },
     "repository": {
         "type": "git",
