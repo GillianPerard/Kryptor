@@ -136,9 +136,15 @@ Options:
 
 Instead of use the CLI if you don't know how to or just because you think it's boring to remember you all options; you can use Kryptor thanks to the **easy-kryptor.js** file.
 
-Go to the project folder then go to src folder.
+Run the one of following commands to start the program and follow the instructions:
 
-Run the following command to start the program and follow the instructions:
+### From the root directory
+
+```sh
+npm start
+```
+
+### From the src directory
 
 ```sh
 node easy-kryptor
@@ -148,6 +154,15 @@ Example:
 
 <img src="./assets/easy-kryptor.png" width="400">
 
+## Testing
+
+For the moment there is only one test that checks all command from kryptor.js.
+
+To run it, use the following command from the root directory:
+
+```sh
+npm test
+```
 
 ## Author
 
@@ -155,4 +170,4 @@ Example:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
