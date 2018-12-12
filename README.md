@@ -1,6 +1,7 @@
 # Kryptor
 
 [![Build Status](https://travis-ci.com/GillianPerard/kryptor.svg?branch=master)](https://travis-ci.com/GillianPerard/kryptor)
+[![Known Vulnerabilities](https://snyk.io/test/github/GillianPerard/kryptor/badge.svg?targetFile=package.json)](https://snyk.io/test/github/GillianPerard/kryptor?targetFile=package.json)
 
 A CLI to generate RSA key (private and public), public encrypt, private decrypt, private encrypt & public decrypt (for the moment).
 
