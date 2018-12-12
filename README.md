@@ -1,5 +1,7 @@
 # Kryptor
 
+[![Build Status](https://travis-ci.com/GillianPerard/kryptor.svg?branch=master)](https://travis-ci.com/GillianPerard/kryptor)
+
 A CLI to generate RSA key (private and public), public encrypt, private decrypt, private encrypt & public decrypt (for the moment).
 
 ## Getting Started
@@ -152,7 +154,7 @@ node easy-kryptor
 
 Example:
 
-<img src="./assets/easy-kryptor.png" width="400">
+![Easy Kryptor example](./assets/easy-kryptor.png)
 
 ## Testing
 
