@@ -1,25 +1,31 @@
 const inquirer = require('inquirer')
 const { lstatSync } = require('fs')
-const { generateKeysCmd, encryptCmd, decryptCmd } = require('./commands.js')
+
+const { generateKeysCmd, encryptCmd, decryptCmd, signCmd, verifyCmd } = require('./commands.js')
+const { toFirstLetterUppercase } = require('./utils')
 
 const CommandType = {
-    Public: 'Public',
-    Private: 'Private'
+    Public: 'public',
+    Private: 'private'
 }
 
 const Command = {
-    GenerateKeys: 'Generate keys',
+    GenerateKeys: 'generate keys',
     Encrypt: 'encrypt',
-    Decrypt: 'decrypt'
+    Decrypt: 'decrypt',
+    Sign: 'sign',
+    Verify: 'verify'
 }
 
 const COMMAND_TYPE_INDEX = 0
 const COMMAND_INDEX = 1
-const GENERATE_KEYS = Command.GenerateKeys
-const PUBLIC_ENCRYPT = `${CommandType.Public} ${Command.Encrypt}`
-const PRIVATE_ENCRYPT = `${CommandType.Private} ${Command.Encrypt}`
-const PUBLIC_DECRYPT = `${CommandType.Public} ${Command.Decrypt}`
-const PRIVATE_DECRYPT = `${CommandType.Private} ${Command.Decrypt}`
+const GENERATE_KEYS = toFirstLetterUppercase(Command.GenerateKeys)
+const PUBLIC_ENCRYPT = toFirstLetterUppercase(`${CommandType.Public} ${Command.Encrypt}`)
+const PRIVATE_ENCRYPT = toFirstLetterUppercase(`${CommandType.Private} ${Command.Encrypt}`)
+const PUBLIC_DECRYPT = toFirstLetterUppercase(`${CommandType.Public} ${Command.Decrypt}`)
+const PRIVATE_DECRYPT = toFirstLetterUppercase(`${CommandType.Private} ${Command.Decrypt}`)
+const SIGN = toFirstLetterUppercase(Command.Sign)
+const VERIFY = toFirstLetterUppercase(Command.Verify)
 
 let workflow
 
@@ -37,12 +43,16 @@ const chooseCommand = () => {
             type: 'list',
             name: 'command',
             message: 'What do you want to do?',
-            choices: [GENERATE_KEYS, PUBLIC_ENCRYPT, PRIVATE_ENCRYPT, PUBLIC_DECRYPT, PRIVATE_DECRYPT]
+            choices: [GENERATE_KEYS, PUBLIC_ENCRYPT, PRIVATE_ENCRYPT, PUBLIC_DECRYPT, PRIVATE_DECRYPT, SIGN, VERIFY]
         })
         .then(answer => {
+            answer.command = answer.command.toLowerCase()
             if (answer.command === Command.GenerateKeys) {
                 workflow.command = answer.command
                 chooseKeySize()
+            } else if (answer.command === Command.Sign || answer.command === Command.Verify) {
+                workflow.command = answer.command
+                askKeyPath()
             } else {
                 workflow.command = getCommand(answer.command)
                 workflow.commandType = getCommandType(answer.command)
@@ -104,7 +114,32 @@ const askFilePath = () => {
         })
         .then(answer => {
             workflow.filePath = answer.filePath
-            wannaExport()
+            if (workflow.command === Command.Verify) {
+                askSignaturePath()
+            } else {
+                wannaExport()
+            }
+        })
+}
+
+// Function so that the user can write what is the path to the signature
+const askSignaturePath = () => {
+    inquirer
+        .prompt({
+            type: 'input',
+            name: 'signaturePath',
+            message: `What's the path to the signature ?`,
+            validate: value => {
+                var pass = lstatSync(value).isFile()
+                if (pass) {
+                    return true
+                }
+                return 'Please write a path to an existing file.'
+            }
+        })
+        .then(answer => {
+            workflow.signaturePath = answer.signaturePath
+            runCommand()
         })
 }
 
@@ -116,7 +151,13 @@ const wannaExport = () => {
         message: 'Do you want to export?',
         default: false
     }).then(answer => {
-        if (answer.export && workflow.command === Command.GenerateKeys) { askDestinationFolder() } else if (answer.export && workflow.command !== Command.GenerateKeys) { askDestinationFile() } else { runCommand() }
+        if (answer.export && workflow.command === Command.GenerateKeys) {
+            askDestinationFolder()
+        } else if (answer.export && workflow.command !== Command.GenerateKeys) {
+            askDestinationFile()
+        } else {
+            runCommand()
+        }
     })
 }
 
@@ -173,14 +214,25 @@ const wannaContinue = () => {
 
 // Function to run the appropriate command according to the workflow
 const runCommand = () => {
-    const { command, commandType, keySize, keyPath, filePath, destinationFolder, destinationFile } = workflow
+    const { command, commandType, keySize, keyPath, filePath, signaturePath, destinationFolder, destinationFile } = workflow
+    const { GenerateKeys, Encrypt, Decrypt, Sign, Verify } = Command
     const usePublicKey = commandType === CommandType.Public
-    if (command === GENERATE_KEYS) {
-        generateKeysCmd(keySize, destinationFolder)
-    } else if (command === Command.Encrypt) {
-        encryptCmd(keyPath, filePath, destinationFile, usePublicKey)
-    } else if (command === Command.Decrypt) {
-        decryptCmd(keyPath, filePath, destinationFile, usePublicKey)
+    switch (command) {
+        case GenerateKeys:
+            generateKeysCmd(keySize, destinationFolder)
+            break
+        case Encrypt:
+            encryptCmd(keyPath, filePath, destinationFile, usePublicKey)
+            break
+        case Decrypt:
+            decryptCmd(keyPath, filePath, destinationFile, usePublicKey)
+            break
+        case Sign:
+            signCmd(keyPath, filePath, destinationFile)
+            break
+        case Verify:
+            verifyCmd(keyPath, filePath, signaturePath)
+            break
     }
     wannaContinue()
 }

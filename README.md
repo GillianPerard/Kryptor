@@ -3,15 +3,15 @@
 [![Build Status](https://travis-ci.com/GillianPerard/kryptor.svg?branch=master)](https://travis-ci.com/GillianPerard/kryptor)
 [![Known Vulnerabilities](https://snyk.io/test/github/GillianPerard/kryptor/badge.svg?targetFile=package.json)](https://snyk.io/test/github/GillianPerard/kryptor?targetFile=package.json)
 
-A CLI to generate RSA key (private and public), public encrypt, private decrypt, private encrypt & public decrypt (for the moment).
+A CLI to generate RSA key (private and public), public encrypt, private decrypt, private encrypt, public decrypt, sign & verify.
 
 ## Getting Started
 
-These instructions will help you to get this project on your own machine and run the 5 available commands.
+These instructions will help you to get this project on your own machine and run the 7 available commands.
 
 ### Prerequisites
 
-The only thing you must have is NodeJs 11+.
+The only thing you must have is NodeJs 10.14+.
 
 Check the NodeJs documentation to know how to install it: [https://nodejs.org](https://nodejs.org)
 
@@ -135,11 +135,46 @@ Options:
 # Example: node krypto public-decrypt -p public.pem -f file.enc -e file.txt
 ```
 
+### Sign
+
+To create a signature for a given file.
+
+```sh
+Command:
+    sign | s
+
+Options:
+    -p, --privateKey <path>        [Required] Path of the private key
+    -f, --fileToSign <path>        [Required] Path of the file to sign
+    -e, --export <path>            [Required] Path of the signature
+    -h, --help                      Output usage information
+
+# Example: node krypto sign -p private.pem -f file.txt -s file.sign
+```
+
+### Verify
+
+To verify that a file is not forged thanks to the signature file.
+
+```sh
+Command:
+    verify | v
+
+Options:
+    -p, --publicKey <path>         [Required] Path of the public key
+    -f, --fileToVerify <path>      [Required] Path of the file to verify
+    -s, --signature <path>         [Required] Path of the signature
+    -h, --help                      Output usage information
+
+# Example: node krypto verify -p public.pem -f file.txt -s file.sign
+# Returns: 'Verified OK' or 'Verified Failure'
+```
+
 ## Usage (program)
 
 Instead of use the CLI if you don't know how to or just because you think it's boring to remember you all options; you can use Kryptor thanks to the **easy-kryptor.js** file.
 
-Run the one of following commands to start the program and follow the instructions:
+Run the one of the following commands to start the program and follow the instructions:
 
 ### From the root directory
 

@@ -4,13 +4,18 @@ const { expect } = require('chai')
 const { after, describe, it } = require('mocha')
 const del = require('del')
 
-const licenseExamplePath = './examples/license.json'
-const publicKeyPath = './test/public.pem'
-const privateKeyPath = './test/private.pem'
-const publicEncryptedLicensePath = './test/public-license.enc'
-const privateEncryptedLicensePath = './test/private-license.enc'
-const publicDecryptedLicensePath = './test/public-license.json'
+const IS_VERIFIED = 'Verified OK'
+const IS_FORGED = 'Verified Failure'
+
+const forgedLicensePath = './examples/forged-license.json'
+const licensePath = './examples/license.json'
+const licenseSignaturePath = './test/license.sign'
 const privateDecryptedLicensePath = './test/private-license.json'
+const privateEncryptedLicensePath = './test/private-license.enc'
+const privateKeyPath = './test/private.pem'
+const publicDecryptedLicensePath = './test/public-license.json'
+const publicEncryptedLicensePath = './test/public-license.enc'
+const publicKeyPath = './test/public.pem'
 
 describe('Test kryptor.js', () => {
     it('Generate keys', () => {
@@ -22,13 +27,13 @@ describe('Test kryptor.js', () => {
     })
 
     it('Public encrypt', () => {
-        execSync(`node ./src/kryptor.js pcet -p ${publicKeyPath} -f ${licenseExamplePath} -e ${publicEncryptedLicensePath}`)
+        execSync(`node ./src/kryptor.js pcet -p ${publicKeyPath} -f ${licensePath} -e ${publicEncryptedLicensePath}`)
         const encryptedFileExists = existsSync(publicEncryptedLicensePath)
         expect(encryptedFileExists).to.be.true
     })
 
     it('Private encrypt', () => {
-        execSync(`node ./src/kryptor.js peet -p ${privateKeyPath} -f ${licenseExamplePath} -e ${privateEncryptedLicensePath}`)
+        execSync(`node ./src/kryptor.js peet -p ${privateKeyPath} -f ${licensePath} -e ${privateEncryptedLicensePath}`)
         const encryptedFileExists = existsSync(privateEncryptedLicensePath)
         expect(encryptedFileExists).to.be.true
     })
@@ -44,6 +49,26 @@ describe('Test kryptor.js', () => {
         const decryptedFileExists = existsSync(privateDecryptedLicensePath)
         expect(decryptedFileExists).to.be.true
     })
+
+    it('Sign', () => {
+        execSync(`node ./src/kryptor.js s -p ${privateKeyPath} -f ${licensePath} -e ${licenseSignaturePath}`)
+        const signatureExists = existsSync(licenseSignaturePath)
+        expect(signatureExists).to.be.true
+    })
+
+    it('Verify: true', () => {
+        let result = execSync(`node ./src/kryptor.js v -p ${publicKeyPath} -f ${licensePath} -s ${licenseSignaturePath}`)
+        result = removeBreakLines(result.toString())
+        expect(result.toString()).to.be.equal(IS_VERIFIED)
+    })
+
+    it('Verify: false', () => {
+        let result = execSync(`node ./src/kryptor.js v -p ${publicKeyPath} -f ${forgedLicensePath} -s ${licenseSignaturePath}`)
+        result = removeBreakLines(result.toString())
+        expect(result.toString()).to.be.equal(IS_FORGED)
+    })
 })
 
-after(() => del.sync(['./test/*.pem', './test/*.enc', './test/*.json']))
+after(() => del.sync(['./test/*.pem', './test/*.enc', './test/*.json', './test/*.sign']))
+
+const removeBreakLines = text => text.replace(/\n/gm, '')
