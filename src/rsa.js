@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 
 const RSA = 'rsa'
+const ALGORITHM = 'RSA-SHA256'
 const FORMAT = 'pem'
 const OPTIONS = {
     modulusLength: 4096,
@@ -61,4 +62,27 @@ const privateDecrypt = (privateKey, textToDecrypt) => {
     return crypto.privateDecrypt(privateKey, textToDecrypt).toString('utf-8')
 }
 
-module.exports = { generateKeys, privateEncrypt, publicDecrypt, publicEncrypt, privateDecrypt }
+/**
+ * Function to sign a text with the private key
+ * @param privateKey The specified private key
+ * @param textToSign The text to sign
+ */
+const sign = (privateKey, textToSign) => {
+    const s = crypto.createSign(ALGORITHM)
+    s.update(textToSign)
+    return s.sign(privateKey, 'base64')
+}
+
+/**
+ * Function to verify a signature to validate a document with the public key
+ * @param publicKey The specified public key
+ * @param textToVerify The text to verify
+ * @param signature The signature
+ */
+const verify = (publicKey, textToVerify, signature) => {
+    const v = crypto.createVerify(ALGORITHM)
+    v.update(textToVerify)
+    return v.verify(publicKey, signature, 'base64')
+}
+
+module.exports = { generateKeys, privateEncrypt, publicDecrypt, publicEncrypt, privateDecrypt, sign, verify }
