@@ -1,6 +1,6 @@
 const { readFileSync, writeFileSync } = require('fs')
 const { join } = require('path')
-const { generateKeys, privateEncrypt, publicDecrypt, publicEncrypt, privateDecrypt } = require('./rsa')
+const { generateKeys, privateEncrypt, publicDecrypt, publicEncrypt, privateDecrypt, sign, verify } = require('./rsa')
 
 const PUBLIC_KEY_FILE_NAME = 'public.pem'
 const PRIVATE_KEY_FILE_NAME = 'private.pem'
@@ -72,4 +72,47 @@ const decryptCmd = (keyPath, fileToDecrypt, destination, usePublicKey) => {
     }
 }
 
-module.exports = { generateKeysCmd, encryptCmd, decryptCmd }
+const signCmd = (keyPath, fileToSign, destination) => {
+    if (!keyPath) {
+        throw new Error('Path of the key is required.')
+    }
+
+    if (!fileToSign) {
+        throw new Error('Path of file to sign is required.')
+    }
+
+    const key = readFileSync(keyPath, 'utf-8')
+    const textToSign = readFileSync(fileToSign, 'utf-8')
+    const signature = sign(key, textToSign)
+
+    if (!destination) {
+        console.log(signature)
+    } else {
+        writeFileSync(destination, signature)
+        console.log('Signature file has been saved.')
+    }
+}
+
+const verifyCmd = (keyPath, fileToVerify, signaturePath) => {
+    if (!keyPath) {
+        throw new Error('Path of the key is required.')
+    }
+
+    if (!fileToVerify) {
+        throw new Error('Path of file to verify is required.')
+    }
+
+    if (!signaturePath) {
+        throw new Error('Path of the signature is required.')
+    }
+
+    const key = readFileSync(keyPath, 'utf-8')
+    const textToVerify = readFileSync(fileToVerify, 'utf-8')
+    const signature = readFileSync(signaturePath, 'utf-8')
+    const isVerified = verify(key, textToVerify, signature)
+
+    const result = isVerified ? 'Verified OK' : 'Verified Failure'
+    console.log(result)
+}
+
+module.exports = { generateKeysCmd, encryptCmd, decryptCmd, signCmd, verifyCmd }
