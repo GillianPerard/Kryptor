@@ -1,5 +1,6 @@
 const { readFileSync, writeFileSync } = require('fs')
 const { join } = require('path')
+
 const { generateKeys, privateEncrypt, publicDecrypt, publicEncrypt, privateDecrypt, sign, verify } = require('./rsa')
 
 const PUBLIC_KEY_FILE_NAME = 'public.pem'
