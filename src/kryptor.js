@@ -1,6 +1,7 @@
 #!/bin/env node
 const program = require('commander')
-const { generateKeysCmd, encryptCmd, decryptCmd } = require('./commands.js')
+
+const { generateKeysCmd, encryptCmd, decryptCmd, signCmd, verifyCmd } = require('./commands.js')
 
 // Program description
 program
@@ -49,5 +50,23 @@ program
     .option('-f, --fileToDecrypt <path>', '[Required] Path of the encrypted file.')
     .option('-e, --export <path>', '[Required] Path of the decrypted file.')
     .action(cmd => decryptCmd(cmd.publicKey, cmd.fileToDecrypt, cmd.export, true))
+
+// Add sign command to the program
+program
+    .command('sign')
+    .alias('s')
+    .option('-p, --privateKey <path>', '[Required] Path of the private key.')
+    .option('-f, --fileToSign <path>', '[Required] Path of the file to sign.')
+    .option('-e, --export <path>', '[Required] Path of the signature.')
+    .action(cmd => signCmd(cmd.privateKey, cmd.fileToSign, cmd.export))
+
+// Add verify command to the program
+program
+    .command('verify')
+    .alias('v')
+    .option('-p, --publicKey <path>', '[Required] Path of the public key.')
+    .option('-f, --fileToVerify <path>', '[Required] Path of the file to verify.')
+    .option('-s, --signature <path>', '[Required] Path of the signature.')
+    .action(cmd => verifyCmd(cmd.publicKey, cmd.fileToVerify, cmd.signature))
 
 program.parse(process.argv)
