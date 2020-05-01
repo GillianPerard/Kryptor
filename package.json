@@ -1,46 +1,50 @@
 {
-    "name": "kryptor",
-    "version": "1.0.0",
-    "description": "A CLI to generate RSA keys, encrypt and decrypt.",
-    "main": "src/kryptor.js",
-    "bin": {
-        "kryptor": "src/kryptor.js"
-    },
-    "scripts": {
-        "start": "node src/easy-kryptor.js",
-        "lint": "./node_modules/.bin/eslint . --color",
-        "test": "./node_modules/.bin/mocha --reporter spec"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/GillianPerard/kryptor.git"
-    },
-    "keywords": [
-        "RSA",
-        "generate",
-        "encrypt",
-        "decrypt",
-        "CLI"
-    ],
-    "author": "Gillian Pérard",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/GillianPerard/kryptor/issues"
-    },
-    "homepage": "https://github.com/GillianPerard/kryptor#readme",
-    "devDependencies": {
-        "chai": "^4.2.0",
-        "del": "^4.1.1",
-        "eslint": "^5.16.0",
-        "eslint-config-standard": "^12.0.0",
-        "eslint-plugin-import": "^2.17.3",
-        "eslint-plugin-node": "^9.1.0",
-        "eslint-plugin-promise": "^4.1.1",
-        "eslint-plugin-standard": "^4.0.0",
-        "mocha": "^6.1.4"
-    },
-    "dependencies": {
-        "commander": "^2.20.0",
-        "inquirer": "^6.3.1"
-    }
+  "name": "kryptor",
+  "version": "1.0.0",
+  "description": "A CLI to generate RSA keys, encrypt and decrypt.",
+  "main": "src/kryptor.js",
+  "bin": {
+    "kryptor": "src/kryptor.js"
+  },
+  "scripts": {
+    "start": "node src/easy-kryptor.js",
+    "lint": "./node_modules/.bin/eslint . --color",
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GillianPerard/kryptor.git"
+  },
+  "keywords": [
+    "RSA",
+    "generate",
+    "encrypt",
+    "decrypt",
+    "CLI"
+  ],
+  "author": "Gillian Pérard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GillianPerard/kryptor/issues"
+  },
+  "homepage": "https://github.com/GillianPerard/kryptor#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "del": "^4.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.1.4"
+  },
+  "dependencies": {
+    "commander": "^2.20.0",
+    "inquirer": "^6.3.1",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
